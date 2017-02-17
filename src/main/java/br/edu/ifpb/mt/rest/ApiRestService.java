@@ -1,5 +1,6 @@
 package br.edu.ifpb.mt.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,40 +24,46 @@ import br.edu.ifpb.mt.repository.DoadorRepositoty;
  */
 @RestController
 public class ApiRestService {
-	
+
 	@Autowired
 	private PushNotificationService pushNotification;
-	
+
 	@Autowired
 	private DoadorRepositoty doadorRepositoty;
-	
+
 	@RequestMapping(value = "/doador", method = RequestMethod.POST)
 	public ResponseEntity<Doador> saveDoador(@RequestBody Doador doador) {
-		
+
 		Doador doadorSaved = doadorRepositoty.save(doador);
-		
+
 		return new ResponseEntity<Doador>(doadorSaved, HttpStatus.CREATED);
-		
+
 	}
-	
+
 	@RequestMapping(value = "/pushAll", method = RequestMethod.GET)
 	public ResponseEntity<?> pushAll() {
-				
-		return new ResponseEntity<Doador>(HttpStatus.CREATED);
-	}
-	
-	@RequestMapping(value = "/push", method = RequestMethod.GET)
-	public ResponseEntity<?> push() {
-		
-		
+
+		List<String> tokens = new ArrayList<>();
 		List<Doador> doadores = doadorRepositoty.findAll();
 		
-		for (Doador doador : doadores) {
-			Notification notification = new Notification("default", "Ajude Mais", "Teste");
-			Push push = new Push(doador.getTokenFCM(), "high", notification);			
-			pushNotification.sendNotification(push);
-		}
-				
+		doadores.forEach(d -> tokens.add(d.getTokenFCM()));
+		
+		Notification notification = new Notification("default", "Ajude Mais", "Teste");
+		Push push = new Push("high", notification, tokens);
+		pushNotification.sendNotification(push);
+		
+		return new ResponseEntity<Doador>(HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/push", method = RequestMethod.GET)
+	public ResponseEntity<?> push() {
+
+		List<Doador> doadores = doadorRepositoty.findAll();
+
+		Notification notification = new Notification("default", "Ajude Mais", "Teste");
+		Push push = new Push(doadores.get(0).getTokenFCM(), "high", notification);
+		pushNotification.sendNotification(push);
+
 		return new ResponseEntity<Doador>(HttpStatus.CREATED);
 	}
 }

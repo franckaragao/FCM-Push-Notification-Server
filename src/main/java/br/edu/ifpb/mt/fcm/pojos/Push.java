@@ -1,10 +1,7 @@
 package br.edu.ifpb.mt.fcm.pojos;
 
-/**
- * 
- * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
- *
- */
+import java.util.List;
+
 public class Push {
 
 	private String to;
@@ -12,6 +9,14 @@ public class Push {
 	private String priority;
 
 	private Notification notification;
+
+	private List<String> registration_ids;
+
+	public Push(String priority, Notification notification, List<String> registration_ids) {
+		this.priority = priority;
+		this.notification = notification;
+		this.registration_ids = registration_ids;
+	}
 
 	public Push(String to, String priority, Notification notification) {
 		this.to = to;
@@ -21,14 +26,6 @@ public class Push {
 
 	public Push() {
 
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
 	}
 
 	public String getPriority() {
@@ -46,4 +43,21 @@ public class Push {
 	public void setNotification(Notification notification) {
 		this.notification = notification;
 	}
+
+	public List<String> getRegistration_ids() {
+		return registration_ids;
+	}
+
+	public void setRegistration_ids(List<String> registration_ids) {
+		this.registration_ids = registration_ids;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
 }

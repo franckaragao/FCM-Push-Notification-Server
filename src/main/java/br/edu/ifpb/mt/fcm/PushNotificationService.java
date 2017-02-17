@@ -32,7 +32,7 @@ import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
 @Service
 public class PushNotificationService {
 
-	private static final String FCM_SERVER_KEY = "AAAArGqeVzc:APA91bHWypXXXXXXXXXXXXXXXXXXXXXXX";
+	private static final String FCM_SERVER_KEY = "AAAArGqeVzc:APA91bHWypH179AQTmauuAnyxNEmrtxzOQ06n1pxz1u6LWGltqEoYb_to2fYyNzSjsqvryht78BTrmI6RIj9RZx4FgdTe0dAKwbQw8Dw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
 	private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
 
 	/**
@@ -40,26 +40,24 @@ public class PushNotificationService {
 	 * @param push
 	 * @return
 	 */
+	
 	public FirebaseResponse sendNotification(Push push) {
 
-			HttpEntity<Push> request = new HttpEntity<>(push);
+		HttpEntity<Push> request = new HttpEntity<>(push);
 
-			CompletableFuture<FirebaseResponse> pushNotification = this.send(request);
-			CompletableFuture.allOf(pushNotification).join();
+		CompletableFuture<FirebaseResponse> pushNotification = this.send(request);
+		CompletableFuture.allOf(pushNotification).join();
 
-			FirebaseResponse firebaseResponse = null;
-			try {
-				firebaseResponse = pushNotification.get();
-			} catch (InterruptedException | ExecutionException e) {
-				e.printStackTrace();
-			}
-			return firebaseResponse;
-	}
+		FirebaseResponse firebaseResponse = null;
+		
+		try {
+			firebaseResponse = pushNotification.get();
+		} catch (InterruptedException | ExecutionException e) {
+			e.printStackTrace();
+		}
+		return firebaseResponse;
+}
 	
-	/**
-	 * @param entity
-	 * @return
-	 */
 	@Async
 	public CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity) {
 

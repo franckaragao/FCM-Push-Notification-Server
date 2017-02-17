@@ -15,5 +15,4 @@ public class FCMapplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FCMapplication.class, args);
 	}
-	
 }
