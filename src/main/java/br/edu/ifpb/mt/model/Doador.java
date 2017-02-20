@@ -1,26 +1,34 @@
 package br.edu.ifpb.mt.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
+/**
+ * 
+ * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
+ *
+ */
 @Entity
 public class Doador {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
 	private String nome;
 
-	private String tokenFCM;
+	@OneToOne(cascade = CascadeType.ALL)
+	private Token tokenFCM;
 
 	public Doador() {
 
 	}
 
-	public Doador(String nome, String tokenFCM) {
+	public Doador(String nome, Token tokenFCM) {
 		this.nome = nome;
 		this.tokenFCM = tokenFCM;
 	}
@@ -33,17 +41,25 @@ public class Doador {
 		this.nome = nome;
 	}
 
-	public String getTokenFCM() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Token getTokenFCM() {
 		return tokenFCM;
 	}
 
-	public void setTokenFCM(String tokenFCM) {
+	public void setTokenFCM(Token tokenFCM) {
 		this.tokenFCM = tokenFCM;
 	}
 
 	@Override
 	public String toString() {
-		return "Doador [nome=" + nome + ", tokenFCM=" + tokenFCM + "]";
+		return "Doador [id=" + id + ", nome=" + nome + ", tokenFCM=" + tokenFCM + "]";
 	}
 
 }

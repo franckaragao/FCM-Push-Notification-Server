@@ -32,7 +32,7 @@ import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
 @Service
 public class PushNotificationService {
 
-	private static final String FCM_SERVER_KEY = "AAAArGqeVzc:APA91bHWypH179AQTmauuAnyxNEmrtxzOQ06n1pxz1u6LWGltqEoYb_to2fYyNzSjsqvryht78BTrmI6RIj9RZx4FgdTe0dAKwbQw8Dw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
+	private static final String FCM_SERVER_KEY = "xxxxxxxxxxxxxxxw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
 	private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
 
 	/**
@@ -58,6 +58,12 @@ public class PushNotificationService {
 		return firebaseResponse;
 }
 	
+	/**
+	 * Envia notificação
+	 * 
+	 * @param entity
+	 * @return
+	 */
 	@Async
 	public CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity) {
 
