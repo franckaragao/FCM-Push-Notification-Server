@@ -2,6 +2,8 @@ package br.edu.ifpb.mt.fcm.pojos;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * 
  * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
@@ -15,18 +17,19 @@ public class Push {
 
 	private Notification notification;
 
-	private List<String> registration_ids;
+	@JsonProperty(value = "registration_ids")
+	private List<String> registrationIds;
 
 	/**
 	 * 
 	 * @param priority
 	 * @param notification
-	 * @param registration_ids
+	 * @param registrationds
 	 */
-	public Push(String priority, Notification notification, List<String> registration_ids) {
+	public Push(String priority, Notification notification, List<String> registrationds) {
 		this.priority = priority;
 		this.notification = notification;
-		this.registration_ids = registration_ids;
+		this.registrationIds = registrationds;
 	}
 
 	/**
@@ -64,12 +67,12 @@ public class Push {
 		this.notification = notification;
 	}
 
-	public List<String> getRegistration_ids() {
-		return registration_ids;
+	public List<String> getRegistrationIds() {
+		return registrationIds;
 	}
 
-	public void setRegistration_ids(List<String> registration_ids) {
-		this.registration_ids = registration_ids;
+	public void setRegistrationIds(List<String> registrationIds) {
+		this.registrationIds = registrationIds;
 	}
 
 	public String getTo() {

@@ -20,7 +20,7 @@ import br.edu.ifpb.mt.repository.DoadorRepositoty;
 /**
  * 
  * Classe de endpoits básicos para testes de notificações com cliente Android e
- * testes de envios de notificações.
+ * testes para envios de notificações.
  * 
  * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
  *
@@ -35,14 +35,14 @@ public class ApiRestService {
 	private DoadorRepositoty doadorRepositoty;
 
 	/**
-	 * Salva usuário cliente Android com token de registro do firebase
+	 * Salva usuário (cliente Android) com token de registro do firebase
 	 * 
 	 * @param doador
 	 * @return
 	 */
 	@RequestMapping(value = "/doador", method = RequestMethod.POST)
 	public ResponseEntity<Doador> saveDoador(@RequestBody Doador doador) {
-		System.out.println(doador);
+
 		Doador doadorSaved = doadorRepositoty.save(doador);
 
 		return new ResponseEntity<Doador>(doadorSaved, HttpStatus.CREATED);
@@ -50,7 +50,8 @@ public class ApiRestService {
 	}
 
 	/**
-	 * Envia para todos os dispositivos
+	 * Endpoint que, quando chamado envia uma notificação para todos
+	 * os dispositivos registrados.
 	 * 
 	 * @return
 	 */
@@ -62,8 +63,6 @@ public class ApiRestService {
 
 		doadores.forEach(d -> tokens.add(d.getTokenFCM().getToken()));
 		
-		System.out.println(tokens);
-
 		Notification notification = new Notification("default", "Ajude Mais", "Teste");
 		Push push = new Push("high", notification, tokens);
 		pushNotification.sendNotification(push);
@@ -72,7 +71,7 @@ public class ApiRestService {
 	}
 
 	/**
-	 * Envia para único dispositivo
+	 * Quando chamado, endpoint, envia notificação para único dispositivo
 	 * 
 	 * @return
 	 */

@@ -32,7 +32,7 @@ import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
 @Service
 public class PushNotificationService {
 
-	private static final String FCM_SERVER_KEY = "xxxxxxxxxxxxxxxw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
+	private static final String FCM_SERVER_KEY = "xxxxxxxxxxxxxxx4FgdTe0dAKwbQw8Dw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
 	private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
 
 	/**
@@ -59,13 +59,16 @@ public class PushNotificationService {
 }
 	
 	/**
-	 * Envia notificação
+	 * Envia notificação para API do firebase
+	 * 
+	 * Método utiliza CompletableFuture com @Async para realizar 
+	 * chamada assicrona na API do Firebase
 	 * 
 	 * @param entity
 	 * @return
 	 */
 	@Async
-	public CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity) {
+	private CompletableFuture<FirebaseResponse> send(HttpEntity<Push> entity) {
 
 		RestTemplate restTemplate = new RestTemplate();
 

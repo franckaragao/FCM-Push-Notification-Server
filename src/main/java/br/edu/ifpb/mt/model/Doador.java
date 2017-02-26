@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
+ * Entidade básica para teste.
+ * 
+ * Um doador com nome e token do firebase para identificação do dispositivo
  * 
  * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
  *
