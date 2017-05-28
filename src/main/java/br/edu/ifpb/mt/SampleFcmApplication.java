@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  */
 @SpringBootApplication
-public class FCMapplication {
+public class SampleFcmApplication {
 	
 
 	/**
@@ -17,6 +17,6 @@ public class FCMapplication {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		SpringApplication.run(FCMapplication.class, args);
+		SpringApplication.run(SampleFcmApplication.class, args);
 	}
 }

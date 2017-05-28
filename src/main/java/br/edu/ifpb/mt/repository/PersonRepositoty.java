@@ -1,9 +1,11 @@
 package br.edu.ifpb.mt.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import br.edu.ifpb.mt.model.Doador;
+import br.edu.ifpb.mt.model.Person;
 
 /**
  * 
@@ -11,6 +13,12 @@ import br.edu.ifpb.mt.model.Doador;
  *
  */
 @Repository
-public interface DoadorRepositoty extends JpaRepository<Doador, Long>{
+public interface PersonRepositoty extends JpaRepository<Person, Long>{
+	
+	/**
+	 * 
+	 * @return
+	 */
+	Optional<Person> findFirstByOrderByName();
 
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.scheduling.annotation.Async;
@@ -21,7 +22,7 @@ import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
  * </p>
  *
  * <p>
- * Service para envio de mensagens para o servidor do firebase cloud messaging
+ * Service send message to FCM
  * </p>
  * 
  * 
@@ -32,7 +33,9 @@ import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
 @Service
 public class PushNotificationService {
 
-	private static final String FCM_SERVER_KEY = "xxxxxxxxxxxxxxx4FgdTe0dAKwbQw8Dw9BESEQ4gViVERTUS0uT06C7DZ2GS-tDxy-kV";
+	@Value("${my.fcm.key}")
+	private String fcmKey;
+	
 	private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
 
 	/**
@@ -73,7 +76,7 @@ public class PushNotificationService {
 		RestTemplate restTemplate = new RestTemplate();
 
 		ArrayList<ClientHttpRequestInterceptor> interceptors = new ArrayList<>();
-		interceptors.add(new HeaderRequestInterceptor("Authorization", "key=" + FCM_SERVER_KEY));
+		interceptors.add(new HeaderRequestInterceptor("Authorization", "key=" + fcmKey));
 		interceptors.add(new HeaderRequestInterceptor("Content-Type", "application/json"));
 		restTemplate.setInterceptors(interceptors);
 

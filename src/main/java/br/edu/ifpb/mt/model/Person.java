@@ -8,40 +8,30 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 /**
- * Entidade básica para teste.
  * 
- * Um doador com nome e token do firebase para identificação do dispositivo
  * 
  * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
  *
  */
 @Entity
-public class Doador {
+public class Person {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 
-	private String nome;
+	private String name;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	private Token tokenFCM;
 
-	public Doador() {
+	public Person() {
 
 	}
 
-	public Doador(String nome, Token tokenFCM) {
-		this.nome = nome;
+	public Person(String name, Token tokenFCM) {
+		this.name = name;
 		this.tokenFCM = tokenFCM;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public Long getId() {
@@ -52,17 +42,20 @@ public class Doador {
 		this.id = id;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public Token getTokenFCM() {
 		return tokenFCM;
 	}
 
 	public void setTokenFCM(Token tokenFCM) {
 		this.tokenFCM = tokenFCM;
-	}
-
-	@Override
-	public String toString() {
-		return "Doador [id=" + id + ", nome=" + nome + ", tokenFCM=" + tokenFCM + "]";
 	}
 
 }

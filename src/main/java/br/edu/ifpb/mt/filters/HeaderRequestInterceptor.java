@@ -10,8 +10,6 @@ import org.springframework.http.client.support.HttpRequestWrapper;
 
 /**
  * 
- * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
- *
  */
 public class HeaderRequestInterceptor implements ClientHttpRequestInterceptor {
 	

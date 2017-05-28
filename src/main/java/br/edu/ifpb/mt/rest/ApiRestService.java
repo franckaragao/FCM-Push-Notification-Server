@@ -14,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifpb.mt.fcm.PushNotificationService;
 import br.edu.ifpb.mt.fcm.pojos.Notification;
 import br.edu.ifpb.mt.fcm.pojos.Push;
-import br.edu.ifpb.mt.model.Doador;
-import br.edu.ifpb.mt.repository.DoadorRepositoty;
+import br.edu.ifpb.mt.model.Person;
+import br.edu.ifpb.mt.repository.PersonRepositoty;
 
 /**
  * 
- * Classe de endpoits básicos para testes de notificações com cliente Android e
- * testes para envios de notificações.
+ * Rest services for tests.
  * 
  * @author <a href="https://github.com/FranckAJ">Franck Aragão</a>
  *
@@ -28,30 +27,35 @@ import br.edu.ifpb.mt.repository.DoadorRepositoty;
 @RestController
 public class ApiRestService {
 
+	/**
+	 * 
+	 */
 	@Autowired
 	private PushNotificationService pushNotification;
 
+	/**
+	 * 
+	 */
 	@Autowired
-	private DoadorRepositoty doadorRepositoty;
+	private PersonRepositoty personRepositoty;
 
 	/**
-	 * Salva usuário (cliente Android) com token de registro do firebase
+	 * save entity with token FCM from app android
 	 * 
-	 * @param doador
+	 * @param person
 	 * @return
 	 */
-	@RequestMapping(value = "/doador", method = RequestMethod.POST)
-	public ResponseEntity<Doador> saveDoador(@RequestBody Doador doador) {
+	@RequestMapping(value = "/person", method = RequestMethod.POST)
+	public ResponseEntity<Person> saveProject(@RequestBody Person person) {
 
-		Doador doadorSaved = doadorRepositoty.save(doador);
+		Person personSaved = personRepositoty.save(person);
 
-		return new ResponseEntity<Doador>(doadorSaved, HttpStatus.CREATED);
+		return new ResponseEntity<Person>(personSaved, HttpStatus.CREATED);
 
 	}
 
 	/**
-	 * Endpoint que, quando chamado envia uma notificação para todos
-	 * os dispositivos registrados.
+	 * send notificatin to all
 	 * 
 	 * @return
 	 */
@@ -59,31 +63,31 @@ public class ApiRestService {
 	public ResponseEntity<?> pushAll() {
 
 		List<String> tokens = new ArrayList<>();
-		List<Doador> doadores = doadorRepositoty.findAll();
+		List<Person> persons = personRepositoty.findAll();
 
-		doadores.forEach(d -> tokens.add(d.getTokenFCM().getToken()));
-		
-		Notification notification = new Notification("default", "Ajude Mais", "Teste");
+		persons.forEach(p -> tokens.add(p.getTokenFCM().getToken()));
+
+		Notification notification = new Notification("default", "My App", "Test");
 		Push push = new Push("high", notification, tokens);
 		pushNotification.sendNotification(push);
 
-		return new ResponseEntity<Doador>(HttpStatus.CREATED);
+		return new ResponseEntity<Person>(HttpStatus.CREATED);
 	}
 
 	/**
-	 * Quando chamado, endpoint, envia notificação para único dispositivo
+	 * Send to singleton app
 	 * 
 	 * @return
 	 */
 	@RequestMapping(value = "/push", method = RequestMethod.GET)
 	public ResponseEntity<?> push() {
 
-		List<Doador> doadores = doadorRepositoty.findAll();
-
-		Notification notification = new Notification("default", "Ajude Mais", "Teste");
-		Push push = new Push(doadores.get(0).getTokenFCM().getToken(), "high", notification);
-		pushNotification.sendNotification(push);
-
-		return new ResponseEntity<Doador>(HttpStatus.CREATED);
+		personRepositoty.findFirstByOrderByName().ifPresent(p -> {
+			Notification notification = new Notification("default", "My app", "Teste");
+			Push push = new Push(p.getTokenFCM().getToken(), "high", notification);
+			pushNotification.sendNotification(push);
+		});
+		
+		return new ResponseEntity<Person>(HttpStatus.OK);
 	}
 }
