@@ -71,7 +71,7 @@ public class ApiRestService {
 		Push push = new Push("high", notification, tokens);
 		pushNotification.sendNotification(push);
 
-		return new ResponseEntity<Person>(HttpStatus.CREATED);
+		return new ResponseEntity<Person>(HttpStatus.OK);
 	}
 
 	/**
