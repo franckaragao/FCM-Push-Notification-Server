@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.mt.fcm.PushNotificationService;
-import br.edu.ifpb.mt.fcm.pojos.Notification;
-import br.edu.ifpb.mt.fcm.pojos.Push;
+import br.edu.ifpb.mt.fcm.dto.Notification;
+import br.edu.ifpb.mt.fcm.dto.Push;
 import br.edu.ifpb.mt.model.Person;
 import br.edu.ifpb.mt.repository.PersonRepositoty;
 

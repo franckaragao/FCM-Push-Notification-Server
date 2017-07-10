@@ -1,4 +1,4 @@
-package br.edu.ifpb.mt.fcm.pojos;
+package br.edu.ifpb.mt.fcm.dto;
 
 /**
  * 

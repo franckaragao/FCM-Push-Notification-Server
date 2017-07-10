@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import br.edu.ifpb.mt.fcm.pojos.Push;
+import br.edu.ifpb.mt.fcm.dto.Push;
 import br.edu.ifpb.mt.filters.HeaderRequestInterceptor;
 
 /**
@@ -35,7 +35,7 @@ public class PushNotificationService {
 
 	@Value("${my.fcm.key}")
 	private String fcmKey;
-	
+
 	private static final String FCM_API = "https://fcm.googleapis.com/fcm/send";
 
 	/**
@@ -43,7 +43,7 @@ public class PushNotificationService {
 	 * @param push
 	 * @return
 	 */
-	
+
 	public FirebaseResponse sendNotification(Push push) {
 
 		HttpEntity<Push> request = new HttpEntity<>(push);
@@ -52,20 +52,20 @@ public class PushNotificationService {
 		CompletableFuture.allOf(pushNotification).join();
 
 		FirebaseResponse firebaseResponse = null;
-		
+
 		try {
 			firebaseResponse = pushNotification.get();
 		} catch (InterruptedException | ExecutionException e) {
 			e.printStackTrace();
 		}
 		return firebaseResponse;
-}
-	
+	}
+
 	/**
-	 * Envia notificação para API do firebase
+	 * send push notification to API FCM
 	 * 
-	 * Método utiliza CompletableFuture com @Async para realizar 
-	 * chamada assicrona na API do Firebase
+	 * Using CompletableFuture with @Async to provide Asynchronous call.
+	 * 
 	 * 
 	 * @param entity
 	 * @return
